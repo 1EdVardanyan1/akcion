@@ -55,14 +55,12 @@ class DefaultController extends Controller
                             /**TopSelling**/
 
                             /** paginator**/
-
         $postsPerPage = 6;/** cucadrvox orinaki qanak**/
         $blogRepository = $this->getDoctrine()->getRepository(Products::class);
         $blogsTotalCountQuery = $blogRepository->createQueryBuilder('p')
             ->select('count(p)')
             ->getQuery()
         ;
-
         $blogsTotalCount = $blogsTotalCountQuery->getSingleScalarResult();
         $paginationTotal = ceil($blogsTotalCount / $postsPerPage); /**knopkeqi,ejeri qanak **/
 
@@ -81,11 +79,12 @@ class DefaultController extends Controller
         $blogsTotalCount = $blogsTotalCountQuery->getSingleScalarResult();
 
         $paginationTotal = ceil($blogsTotalCount / $postsPerPage); /**knopkeqi,ejeri qanak **/
+                                /** paginator**/
 
-/****************yhjgfjhgj***********************/
-        /** paginator**/
+
             $blogsQuery = $blogRepository->createQueryBuilder('p')
                 ->where('p.category = :category or :category IS NULL')
+                ->setParameter('category' , $categoryFilter)
                 ->setFirstResult($offset)
                 ->setMaxResults($postsPerPage)
                 ->getQuery()
