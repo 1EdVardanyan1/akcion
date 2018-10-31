@@ -1,0 +1,51 @@
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div xmlns="http://www.w3.org/1999/html">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="login-field col-md-4 col-md-offset-4" >
+            <div class="login-field-header">
+                <div class="login-field-header-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="login-field-header-text">
+                    <p>Գրանցված հաճախորդ</p>
+                </div>
+            </div>
+            <div class="login-field-body">
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+
+                    <div class="form-group">
+                        <input type="text" class="form-control my-form" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="Ձեր Էլ. փոստի հասցեն"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control my-form" id="password" name="_password" required="required" autocomplete="current-password" placeholder="Գաղտնաբառ"/>
+                    </div>
+
+                    <div class="form-group remember-group">
+                        <label>
+                            <div class="remember-type">
+                                <input type="checkbox" class="remember-my" id="remember_me" name="_remember_me" value="on" />
+                            </div>
+                            <div class="remember-text">
+                                <p>Հիշել Ինձ</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button type="submit" id="_submit" name="_submit" class="access">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </button>
+
+                </form>
+                {#<a href="{{ path('fos_user_registration_register') }}">Գրանցվել</a>#}
+            </div>
+        </div>
+    </div>
+</div>

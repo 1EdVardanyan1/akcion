@@ -1,0 +1,193 @@
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-3">
+                <!-- aside Widget -->
+                <form action="{{ path('products') }}" method="post">
+
+                    <div class="aside">
+                        <h3 class="aside-title">Կատեգորիա</h3>
+                        <div class="checkbox-filter">
+                            {% for name in categoryName %}
+                                <div class="input-checkbox">
+                                    <input type="checkbox" id="{{ name.id }}" name="check-category" value="{{ name.id }}">
+                                    <label for="{{ name.id }}">
+                                        <span></span>
+                                        {{ name.categoryName }}
+                                        <small>({{ products[name.id]|length }})</small>
+                                    </label>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <!-- /aside Widget -->
+
+                    <!-- aside Widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Արժեք</h3>
+                        <div class="price-filter">
+                            <div id="price-slider"></div>
+                            <div class="input-number price-min">
+                                <input id="price-min" type="number" name="min-price">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                            <span>-</span>
+                            <div class="input-number price-max">
+                                <input id="price-max" type="number" name="max-price">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /aside Widget -->
+
+                    <!-- aside Widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Արտադրող</h3>
+                        <div class="checkbox-filter">
+
+                            {% for brandName in brand %}
+                                <div class="input-checkbox">
+                                    <input type="checkbox" id="{{ brandName.id }}brand" name="check-brand" value="{{ brandName.id }}">
+                                    <label for="{{ brandName.id }}brand">
+                                        <span></span>
+                                        {{ brandName.brandName }}
+                                        {#<small>(578)</small>#}
+                                    </label>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <div class="aside">
+                        <button class="search-button btn">Որոնել</button>
+                    </div>
+                </form>
+
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Լավագույն վաճառք</h3>
+                    {% for topSell in TopSelling %}
+                        <div class="product-widget">
+                            <div class="product-img">
+                                {% if products[topSell.id].photo %}
+                                    <img src="{{ asset('img/' ~ products[topSell.id].photo) }}" alt="{{ products[topSell.id].productName }}">
+                                {% else %}
+                                    <img src="{{ asset('img/logo.png') }}">
+                                {% endif %}
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">{{ products[topSell.id].category.categoryName }}</p>
+                                <h3 class="product-name"><a href="#">{{ products[topSell.id].productName }}</a></h3>
+                                <h4 class="product-price">AMD {{ products[topSell.id].rebatePrice }}
+                                    <del class="product-old-price">AMD {{ products[topSell.id].price }}</del>
+                                </h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- /ASIDE -->
+
+            <!-- STORE -->
+            <div id="store" class="col-md-9">
+                <!-- store top filter -->
+                <div class="store-filter clearfix">
+                    <ul class="store-grid">
+                        <li class="active"><i class="fa fa-th"></i></li>
+                        <li><a href="#"><i class="fa fa-th-list"></i></a></li>
+                    </ul>
+                </div>
+                <!-- /store top filter -->
+
+                <!-- store products -->
+                <div class="row">
+                    <!-- product -->
+
+                    {% for product in products %}
+                        <div class="col-md-4 col-xs-6">
+                            <div class="product">
+                                <div class="product-img">
+                                    {% if product.photo %}
+                                        <img src="{{ asset('img/' ~ product.photo) }}" alt="{{ product.productName }}">
+                                    {% else %}
+                                        <img src="{{ asset('img/logo.png') }}">
+                                    {% endif %}
+
+                                    <div class="product-label">
+                                        <span class="sale">-{{100 - (product.rebatePrice/product.price * 100)|round }}%</span>
+                                        <span class="new">NEW</span>
+                                    </div>
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">{{ product.category.categoryName }}</p>
+                                    <h3 class="product-name"><a href="#">{{ product.productName }}</a></h3>
+                                    <h4 class="product-price">AMD {{ product.rebatePrice }}
+                                        <del class="product-old-price">AMD {{ product.price }}</del>
+                                    </h4>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product-btns">
+                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                    class="tooltipp">add to wishlist</span></button>
+                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                    class="tooltipp">add to compare</span></button>
+                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart">
+                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- /product -->
+                </div>
+                <!-- /store products -->
+
+                {#<span class="store-qty">Showing 20-100 products</span>#}
+                <!-- store bottom filter -->
+                <div class="store-filter clearfix">
+                    <ul class="pagination page">
+                        <li class="page-item {{ (paginate == 1)? 'disabled': '' }}">
+                            <a class="page-link" href="{{ path('products', {'paginate': paginate - 1}) }}">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        </li>
+                        {% for pgnt in 1..paginationTotal %}
+                            <li class="page-item {{ (pgnt == paginate)? 'active': '' }}">
+                                <a class="page-link" href="{{ path('products', {'paginate': pgnt}) }}">{{ pgnt }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item {{ (paginate == paginationTotal)? 'disabled': '' }}">
+                            <a class="page-link" href="{{ path('products', {'paginate': paginate + 1}) }}">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+
