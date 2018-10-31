@@ -82,7 +82,7 @@ class DefaultController extends Controller
 
         $paginationTotal = ceil($blogsTotalCount / $postsPerPage); /**knopkeqi,ejeri qanak **/
 
-/******************ppopoxutyunAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA***********************/
+/****************yhjgfjhgj***********************/
         /** paginator**/
             $blogsQuery = $blogRepository->createQueryBuilder('p')
                 ->where('p.category = :category or :category IS NULL')
